@@ -107,9 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             RaisedButton(
               child: Text('下載'),
-              onPressed: () {
-                _doDownloadOperation();
-              },
+              onPressed: () => _doDownloadOperation(),
             ),
           ],
         ),
@@ -154,12 +152,15 @@ class _MyHomePageState extends State<MyHomePage> {
     // 如果是iOS，使用getApplicationSupportDirectory
     final directory = Theme.of(context).platform == TargetPlatform.android
         ? await getExternalStorageDirectory()
-        : await getApplicationSupportDirectory();
+        : await getApplicationDocumentsDirectory();
     final localPath = directory.path + '/download';
     final savedDir = Directory(localPath);
     final isDirExists = await savedDir.exists();
     if (!isDirExists) savedDir.create();
     debugPrint('path: $localPath');
+    final isImageExist = await Directory('$localPath/1382549990-622805522.jpg').exists();
+    debugPrint('file path: $localPath/1382549990-622805522.jpg');
+    debugPrint('file exist: $isImageExist');
     return localPath;
   }
 
